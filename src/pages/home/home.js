@@ -60,7 +60,7 @@ export default function Home() {
             </a>
           </span>
         </div>
-      </div>
+      </div> 
     </div>
   )
 }
