@@ -31,7 +31,7 @@ export default function EditorPage() {
                 reactNavigator('/');
             } 
 
-                        socketRef.current.emit(ACTIONS.JOIN, {
+            socketRef.current.emit(ACTIONS.JOIN, {
                 roomId,
                 username: location.state?.username,
             });
@@ -52,6 +52,7 @@ export default function EditorPage() {
                 }
             );
 
+
             // Listening for disconnected
             socketRef.current.on(
                 ACTIONS.DISCONNECTED,
@@ -63,8 +64,7 @@ export default function EditorPage() {
                         );
                     });
                 }
-            );
-        };
+            );    
         }
         init();
     }, []);
@@ -96,7 +96,13 @@ export default function EditorPage() {
         <button className='btn leaveBtn'>Leave</button>        
       </div>
       <div className='editorWrap'>
-        <Editor/>
+        <Editor
+            socketRef={socketRef}
+            roomId={roomId}
+            onCodeChange={(code) => {
+            codeRef.current = code;
+            }}
+        />
       </div>
     </div>
   )
