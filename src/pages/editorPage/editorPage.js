@@ -45,10 +45,10 @@ export default function EditorPage() {
                         console.log(`${username} joined`);
                     }
                     setClients(clients);
-                    // socketRef.current.emit(ACTIONS.SYNC_CODE, {
-                    //     code: codeRef.current,
-                    //     socketId,
-                    // });
+                    socketRef.current.emit(ACTIONS.SYNC_CODE, {
+                        code: codeRef.current,
+                        socketId,
+                    });
                 }
             );
 
@@ -64,10 +64,25 @@ export default function EditorPage() {
                         );
                     });
                 }
-            );    
-        }
+            );
+        };
         init();
     }, []);
+
+
+    async function copyRoomId() {
+        try {
+            await navigator.clipboard.writeText(roomId);
+            toast.success('Room ID has been copied to your clipboard');
+        } catch (err) {
+            toast.error('Could not copy the Room ID');
+            console.error(err);
+        }
+    }   
+    
+    function leaveRoom() {
+        reactNavigator('/');
+    }    
 
 
     if (!location.state) {
@@ -92,8 +107,8 @@ export default function EditorPage() {
                         ))}
           </div>
         </div>
-        <button className='btn copyBtn'>Copy Room Id</button>
-        <button className='btn leaveBtn'>Leave</button>        
+        <button className='btn copyBtn' onClick={copyRoomId}>Copy Room Id</button>
+        <button className='btn leaveBtn' onClick={leaveRoom}>Leave</button>        
       </div>
       <div className='editorWrap'>
         <Editor
